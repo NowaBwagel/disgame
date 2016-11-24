@@ -3,6 +3,7 @@ package com.nowabwagel.voxel;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.nowabwagel.test.TestArrayConnecter;
 
 public class DesktopLauncher {
 	public static void main(String[] args) {
@@ -16,6 +17,6 @@ public class DesktopLauncher {
 		config.vSyncEnabled = false;
 		config.foregroundFPS = 0;
 		config.backgroundFPS = 15;
-		new LwjglApplication(new VoxelGame(), config);
+		new LwjglApplication(new TestArrayConnecter(), config);
 	}
 }

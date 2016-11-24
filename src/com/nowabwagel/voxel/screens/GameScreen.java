@@ -78,7 +78,7 @@ public class GameScreen implements Screen {
 		List<ModelInstance> worldModels = world.getWorldModels();
 
 		modelBatch.begin(camera);
-		modelBatch.render(chunk.getModelInstance(), world.getEnvironment());
+		modelBatch.render(worldModels, world.getEnvironment());
 		modelBatch.end();
 
 		spriteBatch.begin();
