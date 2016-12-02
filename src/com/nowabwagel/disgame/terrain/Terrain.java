@@ -1,12 +1,15 @@
 package com.nowabwagel.disgame.terrain;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
@@ -50,7 +53,8 @@ public class Terrain implements RenderableProvider {
 
 		this.meshes = new Mesh[tilesX * tilesZ];
 		for (i = 0; i < meshes.length; i++) {
-			meshes[i] = new Mesh(false, 5 * 5 * 3, 5 * 5 * 6 * 2, VertexAttribute.Position(),VertexAttribute.Normal());
+			meshes[i] = new Mesh(false, 5 * 5 * 3, 5 * 5 * 6, VertexAttribute.Position(), VertexAttribute.Normal(),
+					VertexAttribute.TexCoords(0));
 			meshes[i].setIndices(indices);
 		}
 
@@ -61,13 +65,14 @@ public class Terrain implements RenderableProvider {
 		// this.vertices = new float[numVertices];
 		this.materials = new Material[tilesX * tilesZ];
 
+		Texture texture = new Texture(Gdx.files.internal("assets/grass.jpg"), true);
+		texture.setWrap(TextureWrap.MirroredRepeat, TextureWrap.MirroredRepeat);
+		texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.MipMapNearestLinear);
+
 		for (i = 0; i < materials.length; i++) {
-			materials[i] = new Material(new ColorAttribute(ColorAttribute.Diffuse, 0, 1, 0, 1));
+			materials[i] = new Material(new TextureAttribute(TextureAttribute.createDiffuse(texture)));
 		}
 	}
-
-	short[] testindices = { 0, 3, 1 };// , 1, 3, 4, 1, 4, 2, 2, 4, 5, 3, 6, 4,
-										// 4, 6, 7, 4, 7, 5, 5, 7, 8 };
 
 	@Override
 	public void getRenderables(Array<Renderable> renderables, Pool<Renderable> pool) {
@@ -80,7 +85,7 @@ public class Terrain implements RenderableProvider {
 
 			if (dirty[i]) {
 				mesh.setVertices(chunk.vertices);
-				mesh.setIndices(chunk.indices, 0, chunk.indices.length);
+				mesh.setIndices(chunk.indices);
 				dirty[i] = false;
 			}
 

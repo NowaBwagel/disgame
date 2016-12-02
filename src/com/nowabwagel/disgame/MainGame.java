@@ -51,8 +51,9 @@ public class MainGame extends Game {
 		Gdx.input.setInputProcessor(controller);
 
 		env = new Environment();
-		env.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.5f, 0.5f, 0.5f, 0.5f));
-		env.add(new DirectionalLight().set(1, 1, 1, 0, -1, 0));
+		env.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1.f));
+		env.set(new ColorAttribute(ColorAttribute.Fog, 01.13f, 0.13f, 0.13f, 1f));
+		env.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
 		terrain = new Terrain(1, 1);
 
@@ -66,12 +67,14 @@ public class MainGame extends Game {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1f);
+		controller.update();
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		Gdx.gl.glClearColor(0.13f, 0.13f, 0.13f, 1);
+		
 		modelBatch.begin(camera);
 		modelBatch.render(terrain, env);
 		modelBatch.end();
-		controller.update();
 
 		spriteBatch.begin();
 		font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond() + ", #visible tiles: "

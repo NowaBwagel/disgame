@@ -21,8 +21,9 @@ public class TerrainChunk {
 		this.z = z;
 
 		this.indices = new short[widthCount * widthCount * 6];
-		// TODO: Allow more vertex data by changing '3' into variable.
-		this.vertices = new float[widthCount * widthCount * 6];
+		// TODO: Allow more vertex data by changing '3' into variable. 3:pos,
+		// 3:normal, 2:texcoords
+		this.vertices = new float[widthCount * widthCount * (3 + 3 + 2)];
 
 		buildIndices();
 		buildFlatVertices();
@@ -67,12 +68,6 @@ public class TerrainChunk {
 
 	}
 
-	private void addUpNormal(int idx) {
-		vertices[idx] = 0;
-		vertices[idx + 1] = 1;
-		vertices[idx + 2] = 0;
-	}
-
 	public void buildFlatVertices() {
 
 		int idx = 0;
@@ -83,10 +78,23 @@ public class TerrainChunk {
 					vertices[idx] = x * vertexOffset;
 					vertices[idx + 1] = 0;
 					vertices[idx + 2] = z * vertexOffset;
-					System.out.println("(" + vertices[idx] + ", " + vertices[idx + 1] + ", " + vertices[idx + 2] + ")");
+					System.out.print("(" + vertices[idx] + ", " + vertices[idx + 1] + ", " + vertices[idx + 2] + ") ");
 					idx += inc;
-					addUpNormal(idx);
+
+					// ADD Normals - Staight up
+					vertices[idx] = 0;
+					vertices[idx + 1] = 1f;
+					vertices[idx + 2] = 0;
+
+					System.out.print("(" + vertices[idx] + ", " + vertices[idx + 1] + ", " + vertices[idx + 2] + ") ");
 					idx += 3;
+
+					// ADD TexCoords * Scale
+					vertices[idx] = (float) x / (widthCount - 1) * 2f;
+					vertices[idx + 1] = (float) z / (widthCount - 1) * 2f;
+
+					System.out.println("(" + vertices[idx] + ", " + vertices[idx + 1] + ")");
+					idx += 2;
 				}
 
 			}
