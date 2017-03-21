@@ -16,12 +16,12 @@ public interface AppState {
 
 	public void onStateDetached(AppStateManager manager);
 
+	public void onStateTerminated();
+
 	public void update(float tpf);
 
 	public void render();
 
 	public void postRender();
-
-	public void dispose();
 
 }

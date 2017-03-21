@@ -89,6 +89,7 @@ public class AppStateManager {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends AppState> T getState(Class<T> stateClass) {
 		synchronized (states) {
 			AppState[] raw = getStates();
@@ -107,20 +108,81 @@ public class AppStateManager {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends AppState> T[] getStates(Class<T> stateClass){
+		synchronized(states){
+			List<AppState> states = new ArrayList<>();
+			
+			AppState[] raw = getStates();
+			for(AppState state : raw){
+				if(stateClass.isAssignableFrom(state.getClass()))
+					states.add(state);
+			}
+			
+			if(!states.isEmpty())
+				return (T[]) states.toArray();
+		}
+		return null;
+	}
 
-	protected void initializePending(){
+	protected void initializePending() {
 		AppState[] raw = getInitializing();
-		if(raw.length == 0){
+		if (raw.length == 0) {
 			return;
 		}
-		
-		synchronized(states){
+
+		synchronized (states) {
 			List<AppState> bucket = Arrays.asList(raw);
 			states.addAll(bucket);
 			initializing.removeAll(bucket);
 		}
-		for(AppState state: raw){
+		for (AppState state : raw) {
 			state.initialize(this, app);
+		}
+	}
+
+	protected void terminatePending() {
+		AppState[] raw = getTerminating();
+		if (raw.length == 0) {
+			return;
+		}
+
+		for (AppState state : raw) {
+			state.onStateTerminated();
+		}
+
+		synchronized (states) {
+			List<AppState> bucket = Arrays.asList(raw);
+			terminating.removeAll(bucket);
+		}
+	}
+
+	public void update(float tpf) {
+		terminatePending();
+		initializePending();
+
+		AppState[] states = getStates();
+		for (AppState state : states) {
+			if (state.isEnabled()) {
+				state.update(tpf);
+			}
+		}
+	}
+
+	public void render() {
+		AppState[] states = getStates();
+		for (AppState state : states) {
+			if (state.isEnabled())
+				state.render();
+		}
+	}
+
+	public void postRender() {
+		AppState[] states = getStates();
+		for (AppState state : states) {
+			if (state.isEnabled())
+				state.postRender();
 		}
 	}
 }

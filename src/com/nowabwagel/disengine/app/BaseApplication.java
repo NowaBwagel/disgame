@@ -23,7 +23,6 @@ public class BaseApplication implements ApplicationListener {
 	@Override
 	public void dispose() {
 		assetManager.dispose();
-		stateManager.dispose();
 	}
 
 	@Override
