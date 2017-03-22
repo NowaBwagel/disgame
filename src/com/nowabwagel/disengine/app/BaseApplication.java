@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 import com.nowabwagel.disengine.app.state.AppStateManager;
 
 public class BaseApplication implements ApplicationListener {
@@ -33,6 +34,12 @@ public class BaseApplication implements ApplicationListener {
 	public void create() {
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
+
+		Gdx.gl.glCullFace(GL20.GL_BACK);
+		Gdx.gl.glFrontFace(GL20.GL_CCW);
+		Gdx.gl.glClearColor(0.13f, 0.13f, 0.13f, 1f);
+
+		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
 	@Override
@@ -47,6 +54,8 @@ public class BaseApplication implements ApplicationListener {
 
 	@Override
 	public void render() {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
 		stateManager.update(Gdx.graphics.getDeltaTime());
 
 		stateManager.render();

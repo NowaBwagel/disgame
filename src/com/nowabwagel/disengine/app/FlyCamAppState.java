@@ -19,7 +19,7 @@ public class FlyCamAppState extends InputProcessingAppState {
 	private int UP = Keys.Q;
 	private int DOWN = Keys.E;
 	private float velocity = 5;
-	private float degreePerPixel = 0.5f;
+	private float degreesPerPixel = 0.5f;
 	private final Vector3 tmp = new Vector3();
 
 	public FlyCamAppState() {
@@ -39,16 +39,17 @@ public class FlyCamAppState extends InputProcessingAppState {
 		this.velocity = velocity;
 	}
 
-	public void setDegreePerPixel(float degreePP) {
-		this.degreePerPixel = degreePP;
+	public void setDegreesPerPixel(float degreePP) {
+		this.degreesPerPixel = degreePP;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		float deltaX = -Gdx.input.getDeltaX() * degreePerPixel;
-		float deltaY = -Gdx.input.getDeltaY() * degreePerPixel;
+		float deltaX = -Gdx.input.getDeltaX() * degreesPerPixel;
+		float deltaY = -Gdx.input.getDeltaY() * degreesPerPixel;
 		camera.direction.rotate(camera.up, deltaX);
 		tmp.set(camera.direction).crs(camera.up).nor();
+		camera.direction.rotate(tmp, deltaY);
 		return true;
 	}
 
@@ -81,27 +82,27 @@ public class FlyCamAppState extends InputProcessingAppState {
 	@Override
 	public void update(float tpf) {
 		if (keys.containsKey(FORWARD)) {
-			tmp.set(camera.direction).nor().scl(tpf * velocity);
+			tmp.set(camera.direction.x, 0, camera.direction.z).nor().scl(tpf * velocity);
 			camera.position.add(tmp);
 		}
 		if (keys.containsKey(BACKWARD)) {
-			tmp.set(camera.direction).nor().scl(-tpf * velocity);
+			tmp.set(camera.direction.x, 0, camera.direction.z).nor().scl(-tpf * velocity);
 			camera.position.add(tmp);
 		}
 		if (keys.containsKey(STRAFE_LEFT)) {
-			tmp.set(camera.direction).crs(camera.up).nor().scl(-tpf * velocity);
+			tmp.set(camera.direction.x, 0, camera.direction.z).crs(camera.up).nor().scl(-tpf * velocity);
 			camera.position.add(tmp);
 		}
 		if (keys.containsKey(STRAFE_RIGHT)) {
-			tmp.set(camera.direction).crs(camera.up).nor().scl(tpf * velocity);
+			tmp.set(camera.direction.x, 0, camera.direction.z).crs(camera.up).nor().scl(tpf * velocity);
 			camera.position.add(tmp);
 		}
 		if (keys.containsKey(UP)) {
-			tmp.set(camera.up).nor().scl(tpf * velocity);
+			tmp.set(Vector3.Y).nor().scl(tpf * velocity);
 			camera.position.add(tmp);
 		}
 		if (keys.containsKey(DOWN)) {
-			tmp.set(camera.up).nor().scl(-tpf * velocity);
+			tmp.set(Vector3.Y).nor().scl(-tpf * velocity);
 			camera.position.add(tmp);
 		}
 		camera.update(true);
