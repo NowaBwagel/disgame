@@ -1,4 +1,4 @@
-package com.nowabwagel.disengine.app.state;
+package com.nowabwagel.disengine.app.stateengine;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 /**
  *

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 /**
  *
@@ -12,25 +12,25 @@ public class Entity {
 
     // Every Entity has a unique id
     private EntityId id;
-    private Component[] components;
+    private DataComponent[] components;
     private Class[] componentClasses;
     private EntitySet entitySet;
 
-    public Entity(EntityId id, Component[] components, Class<? extends Component>[] componentClasses, EntitySet entitySet) {
+    public Entity(EntityId id, DataComponent[] components, Class<? extends DataComponent>[] componentClasses, EntitySet entitySet) {
         this.id = id;
         this.componentClasses = componentClasses;
         this.components = components;
         this.entitySet = entitySet;
     }
 
-    public Entity(EntityId id, Class<? extends Component>[] componentClasses, EntitySet entitySet) {
+    public Entity(EntityId id, Class<? extends DataComponent>[] componentClasses, EntitySet entitySet) {
         this.id = id;
         this.componentClasses = componentClasses;
-        this.components = new Component[componentClasses.length];
+        this.components = new DataComponent[componentClasses.length];
         this.entitySet = entitySet;
     }
 
-    public <T extends Component> void setComponent(T component) {
+    public <T extends DataComponent> void setComponent(T component) {
         for (int i = 0; i < componentClasses.length; i++) {
             if (component.getClass() == componentClasses[i]) {
                 if (components[i] == null) {
@@ -46,7 +46,7 @@ public class Entity {
         entitySet.getEntitySystem().processEntityEvent(new EntityEvent(this, component, EntityEvent.EventType.Change));
     }
 
-    public <T extends Component> void removeComponent(Class<T> componentClass) {
+    public <T extends DataComponent> void removeComponent(Class<T> componentClass) {
         for (int i = 0; i < componentClasses.length; i++) {
             if (componentClasses[i] == componentClass) {
                 if (components[i] == null) {
@@ -60,7 +60,7 @@ public class Entity {
         }
     }
 
-    public <T extends Component> T getComponent(Class<T> componentClass) {
+    public <T extends DataComponent> T getComponent(Class<T> componentClass) {
         for (int i = 0; i < componentClasses.length; i++) {
             if (componentClasses[i] == componentClass) {
                 return (T) components[i];

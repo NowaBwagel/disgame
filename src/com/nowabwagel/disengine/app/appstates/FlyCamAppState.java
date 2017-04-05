@@ -1,12 +1,13 @@
-package com.nowabwagel.disengine.app;
+package com.nowabwagel.disengine.app.appstates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntIntMap;
-import com.nowabwagel.disengine.app.state.AppStateManager;
-import com.nowabwagel.disengine.app.state.InputProcessingAppState;
+import com.nowabwagel.disengine.app.BaseApplication;
+import com.nowabwagel.disengine.app.stateengine.AppStateManager;
+import com.nowabwagel.disengine.app.stateengine.InputProcessingAppState;
 
 public class FlyCamAppState extends InputProcessingAppState {
 	private BaseApplication app;

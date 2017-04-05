@@ -1,4 +1,4 @@
-package com.nowabwagel.disengine.app.state;
+package com.nowabwagel.disengine.app.stateengine;
 
 import com.badlogic.gdx.InputProcessor;
 

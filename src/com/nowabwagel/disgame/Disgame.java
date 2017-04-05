@@ -16,10 +16,11 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader.ObjLoaderParameters;
 import com.nowabwagel.disengine.app.BaseApplication;
-import com.nowabwagel.disengine.app.FlyCamAppState;
+import com.nowabwagel.disengine.app.appstates.FlyCamAppState;
 
 public class Disgame extends BaseApplication {
 
@@ -32,6 +33,11 @@ public class Disgame extends BaseApplication {
 	Environment env;
 	Model model;
 	ModelInstance instance;
+
+	Model doggie;
+	ModelInstance doggieInstance;
+
+	List<ModelInstance> instances = new ArrayList<ModelInstance>();
 
 	public Disgame() {
 
@@ -63,11 +69,29 @@ public class Disgame extends BaseApplication {
 		env.set(new ColorAttribute(ColorAttribute.Fog, 0.13f, 0.13f, 0.13f, 1.0f));
 		env.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-		ModelLoader<ObjLoader.ObjLoaderParameters> loader = new ObjLoader();
+		ModelLoader loader = new ObjLoader();
 		model = loader.loadModel(Gdx.files.internal("assets/tree.obj"), new ObjLoaderParameters(true));
 		instance = new ModelInstance(model);
 		instance.materials.get(0).set(new TextureAttribute(
 				TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("assets/tree.png")))));
+
+		assetManager.load("assets/Doggie.g3db", Model.class);
+
+		assetManager.finishLoading();
+
+		doggie = assetManager.get("assets/Doggie.g3db");
+		doggieInstance = new ModelInstance(doggie);
+
+		instances.add(instance);
+
+		for (int x = 0; x < 20; x++) {
+			for (int z = 0; z < 20; z++) {
+				ModelInstance inst = new ModelInstance(doggie);
+				inst.transform.setTranslation(x * 3, 0, z * 3);
+				instances.add(inst);
+			}
+		}
+
 	}
 
 	float timer = 0;
@@ -83,7 +107,8 @@ public class Disgame extends BaseApplication {
 		timer += Gdx.graphics.getDeltaTime();
 
 		batch.begin(camera);
-		batch.render(instance, env);
+		// batch.render(instance, env);
+		batch.render(instances, env);
 		batch.end();
 
 		update();

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 /**
  *

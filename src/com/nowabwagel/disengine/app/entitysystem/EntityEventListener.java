@@ -1,4 +1,4 @@
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 /**
  *
@@ -8,5 +8,5 @@ public interface EntityEventListener {
 
     public void receiveEntityEvent(EntityEvent changeEvent);
 
-    public Class<? extends Component>[] componentsIntrestedIn();
+    public Class<? extends DataComponent>[] componentsIntrestedIn();
 }

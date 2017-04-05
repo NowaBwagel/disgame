@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,11 +16,11 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class DefaultEntityData implements EntityData {
 
-    private ConcurrentMap<Class, ConcurrentMap<EntityId, ? extends Component>> componentMaps;
+    private ConcurrentMap<Class, ConcurrentMap<EntityId, ? extends DataComponent>> componentMaps;
     private EntityIdGenerator idGenerator;
 
     public DefaultEntityData() {
-        componentMaps = new ConcurrentHashMap<Class, ConcurrentMap<EntityId, ? extends Component>>();
+        componentMaps = new ConcurrentHashMap<Class, ConcurrentMap<EntityId, ? extends DataComponent>>();
         idGenerator = new EntityIdGenerator();
     }
 
@@ -29,32 +29,32 @@ public class DefaultEntityData implements EntityData {
     }
 
     public void removeEntity(EntityId entity) {
-        for (ConcurrentMap<EntityId, ? extends Component> componentMap : componentMaps.values()) {
+        for (ConcurrentMap<EntityId, ? extends DataComponent> componentMap : componentMaps.values()) {
             componentMap.remove(entity);
         }
     }
 
-    public void addComponent(EntityId entity, Component component) {
-        ConcurrentMap<EntityId, ? extends Component> componentMap = componentMaps.get(component.getClass());
+    public void addComponent(EntityId entity, DataComponent component) {
+        ConcurrentMap<EntityId, ? extends DataComponent> componentMap = componentMaps.get(component.getClass());
 
         // IF map does not exist, lets make it
         if (componentMap == null) {
             componentMap = new ConcurrentHashMap();
             componentMaps.put(component.getClass(), componentMap);
         }
-        ((ConcurrentMap<EntityId, Component>) componentMap).put(entity, component);
+        ((ConcurrentMap<EntityId, DataComponent>) componentMap).put(entity, component);
     }
 
-    public <T extends Component> void removeComponent(EntityId entity, Class<T> componentClass) {
-        ConcurrentMap<EntityId, ? extends Component> componentMap = componentMaps.get(componentClass);
+    public <T extends DataComponent> void removeComponent(EntityId entity, Class<T> componentClass) {
+        ConcurrentMap<EntityId, ? extends DataComponent> componentMap = componentMaps.get(componentClass);
 
         if (componentMap != null) {
             ((ConcurrentMap<EntityId, T>) componentMap).remove(entity);
         }
     }
 
-    public <T extends Component> T getComponent(EntityId entity, Class<T> componentClass) {
-        ConcurrentMap<EntityId, ? extends Component> componentMap = componentMaps.get(componentClass);
+    public <T extends DataComponent> T getComponent(EntityId entity, Class<T> componentClass) {
+        ConcurrentMap<EntityId, ? extends DataComponent> componentMap = componentMaps.get(componentClass);
 
         if (componentMap == null) {
             componentMap = new ConcurrentHashMap();
@@ -64,8 +64,8 @@ public class DefaultEntityData implements EntityData {
         return ((ConcurrentMap<EntityId, T>) componentMap).get(entity);
     }
 
-    public <T extends Component> boolean hasComponent(EntityId entity, Class<T> componentClass) {
-        ConcurrentMap<EntityId, ? extends Component> componentMap = componentMaps.get(componentClass);
+    public <T extends DataComponent> boolean hasComponent(EntityId entity, Class<T> componentClass) {
+        ConcurrentMap<EntityId, ? extends DataComponent> componentMap = componentMaps.get(componentClass);
 
         if (componentMap == null) {
             componentMap = new ConcurrentHashMap();
@@ -76,8 +76,8 @@ public class DefaultEntityData implements EntityData {
         return ((ConcurrentMap<EntityId, T>) componentMap).containsKey(entity);
     }
 
-    public Set<EntityId> getAllEntityWithComponents(Class<? extends Component>... components) {
-        ConcurrentMap<EntityId, ? extends Component> componentMap = componentMaps.get(components[0]);
+    public Set<EntityId> getAllEntityWithComponents(Class<? extends DataComponent>... components) {
+        ConcurrentMap<EntityId, ? extends DataComponent> componentMap = componentMaps.get(components[0]);
         Set<EntityId> set = new HashSet();
 
         if (componentMap == null) {

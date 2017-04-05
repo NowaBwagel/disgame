@@ -1,4 +1,4 @@
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,7 +30,7 @@ public class EntitySystem {
         entityChangeListeners.remove(changeListener);
     }
     
-    public void newEntity(Component... components) {
+    public void newEntity(DataComponent... components) {
         EntityId id = entityData.newEntity();
         EntityEvent events[] = new EntityEvent[components.length];
         
@@ -50,7 +50,7 @@ public class EntitySystem {
     // Check if an entity has components the listener needs.
 
     private boolean fitsToListener(EntityId entityId, EntityEventListener listener) {
-        Class<? extends Component>[] intrestedIn = listener.componentsIntrestedIn();
+        Class<? extends DataComponent>[] intrestedIn = listener.componentsIntrestedIn();
         
         for (int i = 0; i < intrestedIn.length; i++) {
             if (entityData.hasComponent(entityId, intrestedIn[i]) == false) {
@@ -87,7 +87,7 @@ public class EntitySystem {
         
     }
     
-    public EntitySet getEntitySet(Class<? extends Component> ... componentClasses){
+    public EntitySet getEntitySet(Class<? extends DataComponent> ... componentClasses){
         
         Map<EntityId, Entity> entityMap = new HashMap<EntityId, Entity>();
         
@@ -97,7 +97,7 @@ public class EntitySystem {
         Iterator<EntityId> iterator = set.iterator();
         while(iterator.hasNext()){
             EntityId id = iterator.next();
-            Component components[] = new Component[componentClasses.length];
+            DataComponent components[] = new DataComponent[componentClasses.length];
             
             for(int i = 0; i < componentClasses.length;i++){
                 components[i] = entityData.getComponent(id, componentClasses[i]);

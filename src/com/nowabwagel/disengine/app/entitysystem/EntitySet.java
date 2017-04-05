@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,7 +26,7 @@ public class EntitySet implements EntityEventListener {
     private boolean isNew = true;
     private EntitySystem entitySystem;
 
-    public void init(EntitySystem entitySystem, Map<EntityId, Entity> entities, Class<? extends Component> componentClasses[]) {
+    public void init(EntitySystem entitySystem, Map<EntityId, Entity> entities, Class<? extends DataComponent> componentClasses[]) {
         this.entities = entities;
         this.entitySystem = entitySystem;
         this.componentClasses = componentClasses;
@@ -111,7 +111,7 @@ public class EntitySet implements EntityEventListener {
     }
 
     @Override
-    public Class<? extends Component>[] componentsIntrestedIn() {
+    public Class<? extends DataComponent>[] componentsIntrestedIn() {
         return componentClasses;
     }
 

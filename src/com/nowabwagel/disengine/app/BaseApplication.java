@@ -5,13 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.nowabwagel.disengine.app.state.AppStateManager;
+import com.nowabwagel.disengine.app.entitysystem.DefaultEntityData;
+import com.nowabwagel.disengine.app.entitysystem.EntitySystem;
+import com.nowabwagel.disengine.app.stateengine.AppStateManager;
 
 public class BaseApplication implements ApplicationListener {
 
 	protected InputMultiplexer inputMultiplexer;
 	protected AssetManager assetManager;
 	protected AppStateManager stateManager;
+	protected EntitySystem entitySystem;
 
 	private int width;
 	private int height;
@@ -20,6 +23,23 @@ public class BaseApplication implements ApplicationListener {
 		inputMultiplexer = new InputMultiplexer();
 		assetManager = new AssetManager();
 		stateManager = new AppStateManager(this);
+		entitySystem = new EntitySystem(new DefaultEntityData());
+	}
+
+	public InputMultiplexer getInputMultiplexer() {
+		return inputMultiplexer;
+	}
+
+	public AssetManager getAssetManager() {
+		return assetManager;
+	}
+
+	public AppStateManager getAppStateManager() {
+		return stateManager;
+	}
+
+	public EntitySystem getEntitySystem() {
+		return entitySystem;
 	}
 
 	public int getWidth() {

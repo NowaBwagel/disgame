@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		config.height = 600;
 		config.samples = 1;
 		config.vSyncEnabled = false;
-		config.foregroundFPS = 300;
+		config.foregroundFPS = 0;
 		config.backgroundFPS = 15;
 		new LwjglApplication(new Disgame(), config);
 	}

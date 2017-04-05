@@ -1,4 +1,4 @@
-package com.nowabwagel.disengine.entitysystem;
+package com.nowabwagel.disengine.app.entitysystem;
 
 /**
  *
@@ -10,7 +10,7 @@ public class EntityEvent {
 
     private Entity entity;
     private EntityId entityId;
-    private Component component;
+    private DataComponent component;
     private EventType eventType;
 
     public enum EventType {
@@ -18,14 +18,14 @@ public class EntityEvent {
         Add, Change, Remove;
     }
 
-    public EntityEvent(Entity entity, Component component, EventType eventType) {
+    public EntityEvent(Entity entity, DataComponent component, EventType eventType) {
         this.entity = entity;
         this.component = component;
         this.eventType = eventType;
         this.entityId = entity.getId();
     }
 
-    public EntityEvent(EntityId entityId, Component component, EventType eventType) {
+    public EntityEvent(EntityId entityId, DataComponent component, EventType eventType) {
         this.entity = null;
         this.component = component;
         this.eventType = eventType;
@@ -40,7 +40,7 @@ public class EntityEvent {
         return entityId;
     }
 
-    public <T extends Component> T getComponent() {
+    public <T extends DataComponent> T getComponent() {
         return (T) component;
     }
 
