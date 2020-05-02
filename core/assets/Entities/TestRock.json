@@ -1,0 +1,9 @@
+{
+  "id": "TestRock",
+  "components": [
+    {
+      "tag": "ModelInstanceComponent",
+      "file": "Models/TexturedRock1.g3dj"
+    }
+  ]
+}
