@@ -1,9 +1,10 @@
 package com.nowabwagel.openrpg.server.networking.executors;
 
 import com.jmr.wrapper.common.Connection;
-import com.nowabwagel.openrpg.common.networking.IPacketExecutor;
-import com.nowabwagel.openrpg.common.networking.Packet;
 import com.nowabwagel.openrpg.server.ServerOpenRPG;
+
+import old.common.networking.IPacketExecutor;
+import old.common.networking.Packet;
 
 public class ServerLoginPacketExecutor implements IPacketExecutor {
 

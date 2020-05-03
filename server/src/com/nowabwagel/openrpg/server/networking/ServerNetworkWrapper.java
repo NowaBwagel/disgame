@@ -2,7 +2,8 @@ package com.nowabwagel.openrpg.server.networking;
 
 import com.jmr.wrapper.common.exceptions.NNCantStartServer;
 import com.jmr.wrapper.server.Server;
-import com.nowabwagel.openrpg.common.networking.AbstractNetworkWrapper;
+
+import old.common.networking.AbstractNetworkWrapper;
 
 public class ServerNetworkWrapper extends AbstractNetworkWrapper {
 

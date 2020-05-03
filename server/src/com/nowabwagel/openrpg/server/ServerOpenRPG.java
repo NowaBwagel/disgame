@@ -3,9 +3,10 @@ package com.nowabwagel.openrpg.server;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.nowabwagel.openrpg.common.AbstractOpenRPG;
-import com.nowabwagel.openrpg.common.GameConfig;
+import com.nowabwagel.openrpg.GameConfig;
 import com.nowabwagel.openrpg.server.networking.ServerNetworkWrapper;
+
+import old.common.AbstractOpenRPG;
 
 public class ServerOpenRPG extends AbstractOpenRPG {
 
