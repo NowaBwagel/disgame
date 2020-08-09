@@ -34,7 +34,7 @@ public class OpenRPG extends Game {
 		}
 		
 		ChunkImpl chunk = new ChunkImpl(new GridPoint3());
-		chunk.
+		// chunk.
 
 	}
 
